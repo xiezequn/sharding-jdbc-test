@@ -63,4 +63,8 @@ public class OrderService {
         fooService();
         throw new IllegalArgumentException("failed");
     }
+
+    public void insert(Order order){
+        orderRepository.insertWithId(order);
+    }
 }

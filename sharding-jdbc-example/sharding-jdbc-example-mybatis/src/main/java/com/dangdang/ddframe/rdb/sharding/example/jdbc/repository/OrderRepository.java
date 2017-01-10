@@ -24,6 +24,8 @@ import com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.Order;
 public interface OrderRepository {
     
     void insert(Order model);
+
+    void insertWithId(Order model);
     
     int update(List<Integer> userIds);
     

@@ -22,6 +22,17 @@
         #{status,jdbcType=CLOB}
         );
     </insert>
+
+    <insert id="insertWithId"  >
+        INSERT INTO `t_order`(
+        `order_id`,`user_id`,`status`
+        )
+        VALUES (
+        #{orderId,jdbcType=BIGINT},
+        #{userId,jdbcType=INTEGER},
+        #{status,jdbcType=CLOB}
+        );
+    </insert>
     
     <update id="update">
         UPDATE `t_order`
