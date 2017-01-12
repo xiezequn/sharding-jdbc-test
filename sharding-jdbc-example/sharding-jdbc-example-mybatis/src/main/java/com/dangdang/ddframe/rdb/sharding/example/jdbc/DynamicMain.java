@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 // CHECKSTYLE:OFF
 @Service
 @Transactional
+//动态表测试
 public class DynamicMain {
     public static void main(final String[] args) {
         // CHECKSTYLE:ON
@@ -42,9 +43,6 @@ public class DynamicMain {
          DROP TABLE `ds_1`.`t_order_5`;
          */
         orderService.insert(order);
-        //orderService.select();
-       /* orderService.selectAllByField(1100L,11,"INIT");
-        OrderItemMapper orderItemMapper = applicationContext.getBean(OrderItemMapper.class);
-        orderItemMapper.selectList(100001L);*/
+
     }
 }

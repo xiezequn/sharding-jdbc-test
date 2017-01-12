@@ -33,6 +33,19 @@
         #{status,jdbcType=CLOB}
         );
     </insert>
+
+    <insert id="insertBatch" parameterType="list">
+        INSERT INTO `t_order`(
+        <include refid="baseColumnList"/>
+        )
+        VALUES
+        <foreach collection="list" item="item" index="index" open="("
+                 close=");" separator="),(">
+            #{item.orderId,jdbcType=INTEGER},
+            #{item.userId,jdbcType=INTEGER},
+            #{item.status,jdbcType=VARCHAR}
+        </foreach>
+    </insert>
     
     <update id="update">
         UPDATE `t_order`
@@ -52,6 +65,64 @@
     <select id="selectAll" resultMap="baseResultMap">
         SELECT
         <include refid="baseColumnList"/>
+        FROM `t_order` order by order_id
+    </select>
+
+
+    <select id="selectEqueal" resultMap="baseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` WHERE user_id= #{userId,jdbcType=INTEGER} order by order_id
+    </select>
+
+    <select id="selectGreater" resultMap="baseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` WHERE user_id> #{userId,jdbcType=INTEGER} order by order_id
+    </select>
+
+    <select id="selectIn" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumnList"/>
         FROM `t_order`
+        WHERE `user_id` in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by user_id
+    </select>
+
+    <select id="selectBeteen" resultMap="baseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order`
+        WHERE `user_id` BETWEEN #{minUserId,jdbcType=INTEGER} and #{maxUserId,jdbcType=INTEGER}
+        order by user_id
+    </select>
+
+
+    <select id="selectLimit" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order`
+        order by order_id asc limit 8,8
+    </select>
+    <resultMap id="FunctionMap" type="com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.Function">
+        <result column="_avg" property="avg" jdbcType="BIGINT"/>
+        <result column="_count" property="count" jdbcType="INTEGER"/>
+        <result column="_distinctCount" property="distinctCount" jdbcType="INTEGER"/>
+        <result column="_sum" property="sum" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="function" resultMap="FunctionMap">
+        SELECT avg(order_id) _avg,count(user_id) _count,count(DISTINCT  user_id) _distinctCount,sum(user_id) _sum from  `t_order`
+    </select>
+
+    <resultMap id="groupByMap" type="com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.GroupBy">
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="countUser" property="countUser" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="groupBy" resultMap="groupByMap">
+      SELECT user_id,count(1) countUser from t_order GROUP  BY  user_id
     </select>
 </mapper>

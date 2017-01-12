@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Order 服务对象.
@@ -38,8 +39,10 @@ public class OrderService {
     private OrderRepository orderRepository;
     
     @Transactional(readOnly = true)
-    public void select() {
-        System.out.println(orderRepository.selectAll());
+    public List<Order> selectAll() {
+        List<Order> list =orderRepository.selectAll();
+        System.out.println(list.size()+":"+list);
+        return list;
     }
     
     public void clear() {
@@ -60,7 +63,20 @@ public class OrderService {
     }
     
     public void fooServiceWithFailure() {
-        fooService();
+        selectAll();
+        Order criteria = new Order();
+        criteria.setOrderId(1);
+        criteria.setStatus("INSERT");
+        orderRepository.insert(criteria);
+        //System.out.println(criteria.getOrderId());
+        criteria.setUserId(11);
+        criteria.setStatus("INSERT2");
+        orderRepository.insert(criteria);
+        //System.out.println(criteria.getOrderId());
+        orderRepository.update(Lists.newArrayList(10, 11));
+        selectAll();
+        clear();
+        selectAll();
         throw new IllegalArgumentException("failed");
     }
 

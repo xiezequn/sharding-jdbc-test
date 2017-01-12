@@ -35,14 +35,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class Main {
-    
-    // CHECKSTYLE:OFF
+    //判断主从规则 MasterSlaveDataSourceTest
+    //com.dangdang.ddframe.rdb.sharding.jdbc.MasterSlaveDataSource.getDataSource()
+    //com.dangdang.ddframe.rdb.sharding.jdbc.MasterSlaveDataSource.isDML()
+    /**使用master库规则
+     1.SQLStatementType.SELECT != sqlStatementType
+     2.之前有执行update insert
+     3.HintManager hintManager = HintManager.getInstance();
+     hintManager.setMasterRouteOnly();
+     //执行数据库操作
+     hintManager.close();
+     重置标记
+     MasterSlaveDataSource.resetDMLFlag();
+     */
+
     public static void main(final String[] args) throws SQLException {
     // CHECKSTYLE:ON
         DataSource dataSource = getShardingDataSource();
@@ -51,7 +60,21 @@ public final class Main {
         printGroupBy(dataSource);
         System.out.println("--------------");
         printHintSimpleSelect(dataSource);
+        System.out.println("--------------");
+        insert(dataSource);
+
     }
+
+    private static void insert(final DataSource dataSource)  throws SQLException {
+        String sql = "INSERT INTO `t_order`(`order_id`,`user_id`, `status`) VALUES (?,?,?)";
+        Connection conn = dataSource.getConnection();
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, 2000+new Random().nextInt(2000));
+        preparedStatement.setInt(2, 10);
+        preparedStatement.setString(3,"status test");
+        preparedStatement.execute();
+    }
+
     
     private static void printSimpleSelect(final DataSource dataSource) throws SQLException {
         String sql = "SELECT i.* FROM t_order o JOIN t_order_item i ON o.order_id=i.order_id WHERE o.user_id=? AND o.order_id=?";
@@ -124,7 +147,7 @@ public final class Main {
         result.setDriverClassName(com.mysql.jdbc.Driver.class.getName());
         result.setUrl(String.format("jdbc:mysql://localhost:3306/%s", dataSourceName));
         result.setUsername("root");
-        result.setPassword("");
+        result.setPassword("root");
         return result;
     }
 }

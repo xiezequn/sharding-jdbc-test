@@ -14,11 +14,16 @@ public interface OrderItemMapper {
 
     OrderItem selectByPrimaryKey(Long itemId);
 
-    List<OrderItem> selectList(Long itemId);
-
     int updateByPrimaryKeySelective(OrderItem record);
 
     int updateByPrimaryKey(OrderItem record);
+
+    List<OrderItem> selectJoin(Long itemId);
+
+    List<OrderItem> selectLeftJoin(Long itemId);
+
+
+
 
 
 }

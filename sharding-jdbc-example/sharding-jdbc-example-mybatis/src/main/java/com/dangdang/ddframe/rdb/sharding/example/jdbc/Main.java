@@ -33,7 +33,7 @@ public class Main {
         OrderService orderService = applicationContext.getBean(OrderService.class);
         orderService.clear();
         orderService.fooService();
-        orderService.select();
+        orderService.selectAll();
     
         //[order_id: , user_id: 10, status: UPDATED, order_id: , user_id: 11, status: UPDATED]
         orderService.clear();
@@ -43,6 +43,6 @@ public class Main {
             System.out.println("roll back");
         }
         //[]
-        orderService.select();
+        orderService.selectAll();
     }
 }

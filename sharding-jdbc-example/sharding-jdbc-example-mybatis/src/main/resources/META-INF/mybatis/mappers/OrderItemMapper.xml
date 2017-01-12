@@ -75,7 +75,7 @@
     <id column="item_id" property="itemId" jdbcType="BIGINT" />
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="CLOB"/>
+    <result column="order_status" property="orderStatus"  jdbcType="CLOB"/>
   </resultMap>
   <!--
    select
@@ -84,10 +84,18 @@
     left JOIN t_order o on i.order_id =o.order_id
     where item_id = #{itemId,jdbcType=BIGINT}
   -->
-  <select id="selectList" resultMap="ORDER_AND_ITEM_MAP" parameterType="java.util.Map" >
+
+  <select id="selectJoin" resultMap="ORDER_AND_ITEM_MAP" parameterType="java.util.Map" >
     select
-    i.item_id, i.order_id, i.user_id,o.status  from t_order_item i
-     left JOIN t_order o on i.order_id =o.order_id
+    i.item_id, i.order_id, i.user_id,o.status order_status  from t_order_item i
+     JOIN t_order o on i.order_id =o.order_id
     where item_id = #{itemId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectLeftJoin" resultMap="ORDER_AND_ITEM_MAP" parameterType="java.util.Map" >
+    select
+    i.item_id, i.order_id, i.user_id,o.status order_status from t_order_item i
+     left JOIN t_order o on i.order_id =o.order_id
+      where item_id = #{itemId,jdbcType=BIGINT}  and o.order_id is not null
   </select>
 </mapper>

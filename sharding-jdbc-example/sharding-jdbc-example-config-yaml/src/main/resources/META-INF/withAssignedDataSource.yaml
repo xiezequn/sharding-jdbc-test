@@ -3,17 +3,17 @@ dataSource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ds_0
     username: root
-    password: 
+    password: root
   ds_1: !!org.apache.commons.dbcp.BasicDataSource
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ds_1
     username: root
-    password: 
+    password: root
   ds_config: !!org.apache.commons.dbcp.BasicDataSource
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ds_config
     username: root
-    password:
+    password: root
 
 idGeneratorClass: com.dangdang.ddframe.rdb.sharding.id.generator.self.CommonSelfIdGenerator
 

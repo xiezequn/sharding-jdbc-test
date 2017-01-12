@@ -7,7 +7,8 @@ public class OrderItem {
 
     private Integer userId;
 
-    private String status;
+
+    private String orderStatus;
 
     public Long getItemId() {
         return itemId;
@@ -33,11 +34,11 @@ public class OrderItem {
         this.userId = userId;
     }
 
-    public String getStatus() {
-        return status;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

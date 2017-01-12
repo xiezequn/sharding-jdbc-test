@@ -29,7 +29,7 @@
     </bean>
     
     <rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id" algorithm-class="com.dangdang.ddframe.rdb.sharding.example.jdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>
-    <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id" algorithm-expression="t_order_${order_id.longValue() % 30}"/>
+    <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id" algorithm-expression="t_order_${order_id.longValue() % 1000}"/>
     <rdb:strategy id="tableShardingStrategy2" sharding-columns="item_id" algorithm-class="com.dangdang.ddframe.rdb.sharding.example.jdbc.algorithm.SingleKeyModuloTableShardingAlgorithm"/>
 
     <rdb:data-source id="shardingDataSource">

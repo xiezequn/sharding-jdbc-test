@@ -19,17 +19,36 @@ package com.dangdang.ddframe.rdb.sharding.example.jdbc.repository;
 
 import java.util.List;
 
+import com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.Function;
+import com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.GroupBy;
 import com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.Order;
+import org.apache.ibatis.annotations.Param;
 
 public interface OrderRepository {
     
     void insert(Order model);
 
     void insertWithId(Order model);
+
+    void insertBatch(List<Order> list);
     
     int update(List<Integer> userIds);
     
     int deleteAll();
     
     List<Order> selectAll();
+
+    List<Order> selectEqueal (int userId);
+
+    List<Order> selectGreater(int userId);
+
+    List<Order> selectIn(List userId);
+
+    List<Order> selectBeteen(@Param("minUserId") int minUserId, @Param("maxUserId")int maxUserId);
+
+    List<Order> selectLimit();
+
+    Function function();
+
+    List<GroupBy> groupBy();
 }

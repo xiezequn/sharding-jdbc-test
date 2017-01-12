@@ -37,6 +37,9 @@
                 <rdb:table-rule logic-table="t_order" actual-tables="t_order_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
                     <rdb:auto-increment-column column-name="order_id"/>
                 </rdb:table-rule>
+                <rdb:table-rule logic-table="t_order_item" actual-tables="t_order_item_${0..1}" database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy">
+                    <rdb:auto-increment-column column-name="item_id"/>
+                </rdb:table-rule>
             </rdb:table-rules>
         </rdb:sharding-rule>
     </rdb:data-source>
