@@ -81,16 +81,21 @@ public class CrudTest {
     }
 
     @Test
-    //hint 暗示
+    //基于暗示(Hint)的分片键值管理器
     public void hint(){
         List<Order> list =orderMapper.selectAll();
         System.out.println(list.size());
         HintManager hintManager = HintManager.getInstance();
+        //添加数据源分片键值
         hintManager.addDatabaseShardingValue("t_order", "user_id", 10);
+        //添加表分片键值
         hintManager.addTableShardingValue("t_order", "order_id", 1L);
         list =orderMapper.selectAll();
         System.out.println(list.size());
-
+        //清除ThreadLocal
+        hintManager.close();
+        list =orderMapper.selectAll();
+        System.out.println(list.size());
     }
 
     @Test //  =

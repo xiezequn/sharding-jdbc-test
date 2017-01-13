@@ -2,6 +2,7 @@ package com.dangdang.ddframe.rdb.sharding.example.jdbc.repository;
 
 
 import com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.OrderItem;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public interface OrderItemMapper {
 
     List<OrderItem> selectLeftJoin(Long itemId);
 
+    List<OrderItem> binding(@Param("orderId") Long orderId,@Param("userId") Integer userId);
 
 
 

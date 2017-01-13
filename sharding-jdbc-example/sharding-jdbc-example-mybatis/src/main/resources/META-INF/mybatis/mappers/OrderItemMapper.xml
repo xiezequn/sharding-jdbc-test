@@ -98,4 +98,18 @@
      left JOIN t_order o on i.order_id =o.order_id
       where item_id = #{itemId,jdbcType=BIGINT}  and o.order_id is not null
   </select>
+
+  <select id="binding" resultMap="ORDER_AND_ITEM_MAP" parameterType="java.util.Map">
+       select
+    i.item_id, i.order_id, i.user_id,o.status order_status from t_order_item i
+     left JOIN t_order o on i.order_id =o.order_id
+     <where>
+       <if test="orderId != null" >
+         and i.order_id = #{orderId,jdbcType=BIGINT}
+       </if>
+       <if test="userId != null" >
+         and  i.user_id = #{userId,jdbcType=INTEGER}
+       </if>
+     </where>
+  </select>
 </mapper>

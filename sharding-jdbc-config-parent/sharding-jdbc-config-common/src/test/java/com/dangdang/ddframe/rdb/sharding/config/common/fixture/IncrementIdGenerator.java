@@ -23,4 +23,11 @@ public class IncrementIdGenerator extends AbstractNumberIdGenerator {
     public Number generateId() {
         return getSequence().incrementAndGet();
     }
+
+    public static void main(String args[]){
+        IncrementIdGenerator generator=new IncrementIdGenerator();
+        for(int i=0;i<10;i++){
+            System.out.println(generator.generateId());
+        }
+    }
 }
