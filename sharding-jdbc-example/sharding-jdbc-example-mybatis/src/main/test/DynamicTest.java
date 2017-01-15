@@ -23,7 +23,7 @@ public class DynamicTest {
     @Test
     public void test(){
         Order order=new Order();
-        order.setOrderId(5);
+        order.setOrderId(5001);
         order.setStatus("test");
         order.setUserId(1);
         /**

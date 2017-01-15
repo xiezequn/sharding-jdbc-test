@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.share.multikeys.repository.ItemRepository">
+    <resultMap id="baseResultMap" type="com.share.multikeys.entity.Item">
+        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="item_id" property="itemId" jdbcType="INTEGER"/>
+        <result column="item_name" property="itemName" jdbcType="VARCHAR"/>
+    </resultMap>
+    
+    <sql id="baseColumnList">
+        item_id,
+        order_id,
+        item_name
+    </sql>
+    
+    <insert id="insert" parameterType="com.share.multikeys.entity.Item" useGeneratedKeys="true" keyProperty="itemId"> 
+    	insert into t_order_item
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="itemId != null">
+	        item_id,
+	      </if>
+	      <if test="orderId != null">
+	        order_id,
+	      </if>
+	      <if test="itemName != null">
+	        item_name
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="itemId != null">
+	        #{itemId,jdbcType=INTEGER},
+	      </if>
+	      <if test="orderId != null">
+	        #{orderId,jdbcType=INTEGER},
+	      </if>
+	      <if test="itemName != null">
+	        #{itemName,jdbcType=VARCHAR}
+	      </if>
+	    </trim>
+	</insert>
+    
+    <update id="update">
+        UPDATE `t_order_item`
+        SET `status` = 'UPDATED'
+        WHERE `order_id` = 1 AND `user_id` in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    
+    
+    <select id="selectAll" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order_item` order by item_id
+    </select>
+    
+    <select id="selectByKey" resultMap="baseResultMap" parameterType="hashmap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` where item_id=#{itemId,jdbcType=INTEGER}
+    </select>
+    
+    <select id="selectJoin" resultMap="baseResultMap" parameterType="hashmap">
+       SELECT
+	   t_order_item.item_id, t_order_item.order_id, t_order_item.order_id,t_order_item.item_name
+	   FROM `t_order` left join `t_order_item` on t_order.order_id=t_order_item.order_id  where t_order_item.order_id= #{orderId,jdbcType=INTEGER}
+    </select>
+  
+</mapper>

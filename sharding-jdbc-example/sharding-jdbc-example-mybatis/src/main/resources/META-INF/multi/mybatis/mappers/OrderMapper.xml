@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.share.multikeys.repository.OrderRepository">
+    <resultMap id="baseResultMap" type="com.share.multikeys.entity.Order">
+        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    
+    <sql id="baseColumnList">
+        order_id,
+        user_id,
+        status,
+        create_time
+    </sql>
+    
+    <insert id="insert" parameterType="com.share.multikeys.entity.Order" useGeneratedKeys="true" keyProperty="orderId"> 
+    	insert into t_order
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="orderId != null">
+	        order_id,
+	      </if>
+	      <if test="userId != null">
+	        user_id,
+	      </if>
+	      <if test="status != null">
+	        status,
+	      </if>
+	      <if test="createTime != null">
+	        create_time
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="orderId != null">
+	        #{orderId,jdbcType=INTEGER},
+	      </if>
+	      <if test="userId != null">
+	        #{userId,jdbcType=INTEGER},
+	      </if>
+	      <if test="status != null">
+	        #{status,jdbcType=VARCHAR},
+	      </if>
+	      <if test="createTime != null">
+	        #{createTime,jdbcType=TIMESTAMP}
+	      </if>
+	    </trim>
+	</insert>
+    
+    <update id="update">
+        UPDATE `t_order`
+        SET `status` = 'UPDATED'
+        WHERE `order_id` = 1 AND `user_id` in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    
+    <select id="selectAll" resultMap="baseResultMap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` order by order_id
+    </select>
+    
+    <select id="selectByKey" resultMap="baseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` where 1=1 and order_id=#{orderId,jdbcType=INTEGER}
+    </select>
+    
+    <select id="selectByKeyOrTime" resultMap="baseResultMap" parameterType="hashmap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` where 1=1  
+        <if test="orderId !=null ">
+           and order_id=#{orderId,jdbcType=INTEGER}
+        </if>
+        <if test="date !=null">
+           and create_time=#{date,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+    
+    <select id="selectBetweenTime" resultMap="baseResultMap" parameterType="hashmap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` where
+        create_time between #{sDate,jdbcType=TIMESTAMP} and #{eDate,jdbcType=TIMESTAMP} 
+    </select>
+    
+    <select id="selectRangeTime" resultMap="baseResultMap" parameterType="hashmap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` where
+        create_time <![CDATA[>]]>#{sDate,jdbcType=TIMESTAMP} and  create_time <![CDATA[<]]> #{eDate,jdbcType=TIMESTAMP} 
+    </select>
+    <select id="selectBetweenKey" resultMap="baseResultMap" parameterType="hashmap">
+        SELECT
+        <include refid="baseColumnList"/>
+        FROM `t_order` where
+        order_id between #{sId,jdbcType=INTEGER} and #{eId,jdbcType=INTEGER} 
+    </select>
+  
+</mapper>
