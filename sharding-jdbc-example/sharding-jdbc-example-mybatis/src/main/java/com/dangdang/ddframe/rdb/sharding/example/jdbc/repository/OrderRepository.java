@@ -33,10 +33,14 @@ public interface OrderRepository {
     void insertBatch(List<Order> list);
     
     int update(List<Integer> userIds);
+
+    void updateByPrimaryKey(Order order);
     
     int deleteAll();
     
     List<Order> selectAll();
+
+    Order selectById(@Param("orderId") Long orderId,@Param("userId")Integer userId);
 
     List<Order> selectEqueal (int userId);
 

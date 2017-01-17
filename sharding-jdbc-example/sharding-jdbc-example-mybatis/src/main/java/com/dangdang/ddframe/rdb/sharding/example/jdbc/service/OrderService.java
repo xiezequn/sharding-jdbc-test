@@ -83,4 +83,13 @@ public class OrderService {
     public void insert(Order order){
         orderRepository.insertWithId(order);
     }
+
+    public void update(){
+        Order order=orderRepository.selectById(1000L,10);
+        System.out.println(order);
+        order.setStatus("test123");
+        orderRepository.updateByPrimaryKey(order);
+        orderRepository.selectById(1000L,10);
+        System.out.println(order);
+    }
 }

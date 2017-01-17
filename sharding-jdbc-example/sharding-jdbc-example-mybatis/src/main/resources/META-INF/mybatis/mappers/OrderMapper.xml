@@ -55,7 +55,13 @@
             #{item}
         </foreach>
     </update>
-    
+
+
+    <update id="updateByPrimaryKey" parameterType="com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.Order" >
+        update t_order
+        set status = #{status,jdbcType=VARCHAR}
+        where order_id = #{orderId,jdbcType=BIGINT} and user_id = #{userId,jdbcType=INTEGER}
+    </update>
     
     <delete id="deleteAll">
         DELETE FROM `t_order`
@@ -68,6 +74,19 @@
         FROM `t_order` order by order_id
     </select>
 
+    <select id="selectById" resultMap="baseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="baseColumnList"/>  FROM `t_order`
+        <where>
+            <if test="userId != 0">
+                and user_id= #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="orderId != 0">
+                and order_id= #{orderId,jdbcType=BIGINT}
+            </if>
+        </where>
+
+    </select>
 
     <select id="selectEqueal" resultMap="baseResultMap" parameterType="java.lang.Integer">
         SELECT
