@@ -41,4 +41,14 @@ public class OrderItem {
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "itemId=" + itemId +
+                ", orderId=" + orderId +
+                ", userId=" + userId +
+                ", orderStatus='" + orderStatus + '\'' +
+                '}';
+    }
 }

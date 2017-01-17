@@ -17,7 +17,7 @@
 
 package com.dangdang.ddframe.rdb.sharding.example.jdbc.entity;
 
-public final class Order {
+public  class Order {
     
     private long orderId;
     

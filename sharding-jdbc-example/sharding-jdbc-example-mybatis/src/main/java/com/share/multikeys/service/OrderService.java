@@ -1,6 +1,7 @@
 package com.share.multikeys.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -27,9 +28,8 @@ public class OrderService {
         System.out.println(orderRepository.selectAll());
     }
     
-    public void selectByKey(Integer orderId) {
-    	Long s=System.currentTimeMillis();
-        System.out.println("cost "+(System.currentTimeMillis()-s)/1000+"S: "+orderRepository.selectByKey(orderId));
+    public List<Order> selectByKey(Integer orderId) {
+        return orderRepository.selectByKey(orderId);
     }
     
     public void selectByKeyOrTime(Integer orderId,Date date) {

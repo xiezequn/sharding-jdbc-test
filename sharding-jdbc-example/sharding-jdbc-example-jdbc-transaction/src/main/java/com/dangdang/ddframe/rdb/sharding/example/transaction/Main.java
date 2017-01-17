@@ -55,9 +55,9 @@ public final class Main {
     }
     
     private static void updateFailure(final DataSource dataSource) throws SQLException {
-        String sql1 = "UPDATE t_order SET status='UPDATE_1' WHERE user_id=10 AND order_id=1000";
-        String sql2 = "UPDATE t_order SET not_existed_column=1 WHERE user_id=1 AND order_id=?";
-        String sql3 = "UPDATE t_order SET status='UPDATE_2' WHERE user_id=10 AND order_id=1100";
+        String sql1 = "UPDATE t_order SET status='UPDATE_10' WHERE user_id=10 AND order_id=1000";
+        String sql2 = "UPDATE t_order SET not_existed_column=1 WHERE user_id=? AND order_id=?";
+        String sql3 = "UPDATE t_order SET status='UPDATE_20' WHERE user_id=11 AND order_id=1100";
 
         SoftTransactionManager transactionManager = new SoftTransactionManager(getSoftTransactionConfiguration(dataSource));
         transactionManager.init();
@@ -68,7 +68,8 @@ public final class Main {
             transaction.begin(conn);
             PreparedStatement preparedStatement1 = conn.prepareStatement(sql1);
             PreparedStatement preparedStatement2 = conn.prepareStatement(sql2);
-            preparedStatement2.setObject(1, 1000);
+            preparedStatement2.setObject(1, 10);
+            preparedStatement2.setObject(2, 1000);
             PreparedStatement preparedStatement3 = conn.prepareStatement(sql3);
             preparedStatement1.executeUpdate();
             preparedStatement2.executeUpdate();

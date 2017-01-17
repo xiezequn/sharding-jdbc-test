@@ -59,9 +59,10 @@ public final class Main {
         System.out.println("--------------");
         printGroupBy(dataSource);
         System.out.println("--------------");
+        insert(dataSource);
+        System.out.println("--------------");
         printHintSimpleSelect(dataSource);
         System.out.println("--------------");
-        insert(dataSource);
 
     }
 

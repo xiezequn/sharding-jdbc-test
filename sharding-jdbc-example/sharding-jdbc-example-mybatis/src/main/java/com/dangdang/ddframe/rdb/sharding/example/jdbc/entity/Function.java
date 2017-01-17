@@ -45,4 +45,14 @@ public class Function implements Serializable {
     public void setSum(long sum) {
         this.sum = sum;
     }
+
+    @Override
+    public String toString() {
+        return "Function{" +
+                "avg=" + avg +
+                ", count=" + count +
+                ", distinctCount=" + distinctCount +
+                ", sum=" + sum +
+                '}';
+    }
 }

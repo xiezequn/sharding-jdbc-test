@@ -32,8 +32,13 @@ public class BidingTest {
     @Test
     public void binding(){
         List<OrderItem>  list =orderItemMapper.binding(1000L,10);
-        System.out.println("size:"+list.size());
-        System.out.println(new Gson().toJson(list));
+        System.out.println("size:"+list.size()+"："+list);
+    }
+
+    @Test
+    public void selectLeftJoin(){
+        List<OrderItem>  list =orderItemMapper.selectLeftJoin(100001L);
+        System.out.println("size:"+list.size()+"："+list);
     }
 
 }

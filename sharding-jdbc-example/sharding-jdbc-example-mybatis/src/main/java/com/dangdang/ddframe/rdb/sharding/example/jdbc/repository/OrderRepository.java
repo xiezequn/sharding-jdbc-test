@@ -42,11 +42,11 @@ public interface OrderRepository {
 
     List<Order> selectGreater(int userId);
 
-    List<Order> selectIn(List userId);
+    List<Order> selectIn(List orderIds);
 
-    List<Order> selectBeteen(@Param("minUserId") int minUserId, @Param("maxUserId")int maxUserId);
+    List<Order> selectBeteen(@Param("minOrderId") long minOrderId, @Param("maxOrderId")long maxOrderId);
 
-    List<Order> selectLimit();
+    List<Order> selectLimit(@Param("index") int index,@Param("pageSizes")int pageSizes);
 
     Function function();
 

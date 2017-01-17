@@ -18,7 +18,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/multikeys"/>
         <property name="username" value="root"/>
-        <property name="password" value="xiezq"/>
+        <property name="password" value="root"/>
     </bean>
     
     <rdb:strategy id="tableShardingStrategy" sharding-columns="order_id,create_time" algorithm-class="com.share.multikeys.algorithm.MultipleKeysIdAndTimeShardingAlgorithm"/>

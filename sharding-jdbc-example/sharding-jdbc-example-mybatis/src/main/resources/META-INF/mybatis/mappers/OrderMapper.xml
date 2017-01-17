@@ -85,27 +85,31 @@
         SELECT
         <include refid="baseColumnList"/>
         FROM `t_order`
-        WHERE `user_id` in
+        WHERE `order_id` in
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
-        order by user_id
+        order by order_id
     </select>
 
     <select id="selectBeteen" resultMap="baseResultMap" parameterType="java.util.Map">
         SELECT
         <include refid="baseColumnList"/>
         FROM `t_order`
-        WHERE `user_id` BETWEEN #{minUserId,jdbcType=INTEGER} and #{maxUserId,jdbcType=INTEGER}
-        order by user_id
+        WHERE `order_id` BETWEEN #{minOrderId,jdbcType=BIGINT} and #{maxOrderId,jdbcType=BIGINT}
+        order by order_id
     </select>
 
 
-    <select id="selectLimit" resultMap="baseResultMap">
+    <select id="selectLimit" resultMap="baseResultMap" parameterType="java.util.Map">
         SELECT
         <include refid="baseColumnList"/>
         FROM `t_order`
-        order by order_id asc limit 8,8
+        order by order_id asc
+        <if test="index != null and pageSizes != null">
+            limit #{index,jdbcType=INTEGER},#{pageSizes,jdbcType=INTEGER}
+        </if>
+
     </select>
     <resultMap id="FunctionMap" type="com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.Function">
         <result column="_avg" property="avg" jdbcType="BIGINT"/>

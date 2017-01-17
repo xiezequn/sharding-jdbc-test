@@ -25,4 +25,12 @@ public class GroupBy {
     public void setCountUser(int countUser) {
         this.countUser = countUser;
     }
+
+    @Override
+    public String toString() {
+        return "GroupBy{" +
+                "userId=" + userId +
+                ", countUser=" + countUser +
+                '}';
+    }
 }
