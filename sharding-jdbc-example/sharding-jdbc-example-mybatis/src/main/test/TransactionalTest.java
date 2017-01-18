@@ -19,6 +19,7 @@ public class TransactionalTest {
 
     @Test
     public void fooServiceWithFailure(){
+        orderService.selectAll();
         try {
             orderService.fooServiceWithFailure();
         } catch (final IllegalArgumentException e) {

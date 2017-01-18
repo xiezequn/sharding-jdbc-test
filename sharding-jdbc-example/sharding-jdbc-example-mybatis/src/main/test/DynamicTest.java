@@ -1,10 +1,13 @@
 import com.dangdang.ddframe.rdb.sharding.example.jdbc.entity.Order;
+import com.dangdang.ddframe.rdb.sharding.example.jdbc.repository.OrderRepository;
 import com.dangdang.ddframe.rdb.sharding.example.jdbc.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +23,9 @@ public class DynamicTest {
     @Autowired
     private OrderService orderService;
 
+    @Resource
+    private OrderRepository orderMapper;
+
     @Test
     public void test(){
         Order order=new Order();
@@ -33,4 +39,12 @@ public class DynamicTest {
          */
         orderService.insert(order);
     }
+
+    @Test
+    public void selectById(){
+        //SELECT * FROM `ds_1`.`t_order_5` where order_id=5001
+        System.out.println("selectById:"+orderMapper.selectById(5001L,1));
+    }
+
+
 }

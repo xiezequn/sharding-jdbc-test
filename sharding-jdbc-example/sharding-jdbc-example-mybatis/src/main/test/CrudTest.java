@@ -78,6 +78,13 @@ public class CrudTest {
     }
 
 
+
+    @Test
+    public void selectById(){
+        // SELECT * FROM `ds_0`.`t_order_0` where order_id=1000 and user_id=10
+        System.out.println("selectById:"+orderMapper.selectById(1000L,10));
+    }
+
     @Test
     // order by
     public void selectAll(){
@@ -112,11 +119,15 @@ public class CrudTest {
 
     @Test //  =
     public void selectEqueal(){
-        /**
+        /** sql校验：
          SELECT * FROM (
          SELECT * FROM `ds_0`.`t_order_0` UNION ALL SELECT * FROM `ds_0`.`t_order_1`
          UNION ALL SELECT * FROM `ds_1`.`t_order_0` UNION ALL SELECT * FROM `ds_1`.`t_order_1`)
          t_order  WHERE user_id =5
+         */
+        /**
+         sql路由：
+         SELECT * FROM `ds_1`.`t_order_0` where user_id=5 UNION ALL SELECT * FROM `ds_1`.`t_order_1` where user_id=5
          */
         System.out.println(orderMapper.selectEqueal(5));
     }

@@ -63,7 +63,6 @@ public class OrderService {
     }
     
     public void fooServiceWithFailure() {
-        selectAll();
         Order criteria = new Order();
         criteria.setOrderId(1);
         criteria.setStatus("INSERT");
