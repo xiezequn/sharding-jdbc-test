@@ -21,11 +21,19 @@
         <property name="password" value="root"/>
     </bean>
     
-    <bean id="ds_1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <!--<bean id="ds_1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/ds_1"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
+    </bean>-->
+    <!--192.168.2.23:3306、3307、3308、3316
+        root：123456-->
+    <bean id="ds_1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://192.168.2.23:3306/ds_1"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
     </bean>
     
     <rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id" algorithm-class="com.dangdang.ddframe.rdb.sharding.example.jdbc.algorithm.SingleKeyModuloDatabaseShardingAlgorithm"/>

@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * Created with IntelliJ IDEA.
  * User: xiezq
  * Date: 2017/1/11
- * Depiction:一致性事务回滚
+ * Depiction:`弱XA`事务回滚
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:META-INF/mybatisContext.xml"})
@@ -22,8 +22,8 @@ public class TransactionalTest {
         orderService.selectAll();
         try {
             orderService.fooServiceWithFailure();
-        } catch (final IllegalArgumentException e) {
-            System.out.println("roll back");
+        } catch (final Exception e) {
+            System.out.println(e);
         }
         orderService.selectAll();
     }

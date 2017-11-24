@@ -64,19 +64,23 @@ public class OrderService {
     
     public void fooServiceWithFailure() {
         Order criteria = new Order();
-        criteria.setOrderId(1);
+        criteria.setUserId(20000);
         criteria.setStatus("INSERT");
         orderRepository.insert(criteria);
         //System.out.println(criteria.getOrderId());
-        criteria.setUserId(11);
-        criteria.setStatus("INSERT2");
+        criteria.setUserId(1111111111);
+        String status="";
+        for(int i=0;i<15;i++){
+            status=status+"Test";
+        }
+        criteria.setStatus("Test");
         orderRepository.insert(criteria);
         //System.out.println(criteria.getOrderId());
         orderRepository.update(Lists.newArrayList(10, 11));
         selectAll();
         clear();
         selectAll();
-        throw new IllegalArgumentException("failed");
+        //throw new IllegalArgumentException("failed");
     }
 
     public void insert(Order order){

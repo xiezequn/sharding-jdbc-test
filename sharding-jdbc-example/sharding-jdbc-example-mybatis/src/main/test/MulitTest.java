@@ -31,10 +31,10 @@ public class MulitTest {
     @Test
     public void insert(){
         Order criteria = new Order();
-        criteria.setUserId(11);
-        criteria.setOrderId(105);
+        criteria.setUserId(12);
+        criteria.setOrderId(115);
         criteria.setStatus("INSERT_TEST_12");
-        criteria.setCreateTime(DateUtil.stringToDate("2016-03-03 17:08:38", "yyyy-MM-dd HH:mm:ss"));
+        criteria.setCreateTime(DateUtil.stringToDate("2016-12-03 17:08:38", "yyyy-MM-dd HH:mm:ss"));
         orderService.insert(criteria);
     }
 
