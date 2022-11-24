@@ -32,7 +32,7 @@
         <mybatis.version>3.2.8</mybatis.version>
         <mybatis-spring.version>1.2.2</mybatis-spring.version>
         <jpa.version>1.0.0.Final</jpa.version>
-        <hibernate.version>4.3.11.Final</hibernate.version>
+        <hibernate.version>5.3.20.Final</hibernate.version>
         <springframework.version>4.3.2.RELEASE</springframework.version>
         
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
